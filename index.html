@@ -9,17 +9,23 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            background: black;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: Arial, sans-serif;
         }
-        canvas {
+        canvas#bg-canvas {
             position: absolute;
-            width: 100vw !important;
-            height: 100vh !important;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+        }
+        canvas#pinkboard {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
             touch-action: none;
         }
         .text {
@@ -33,8 +39,8 @@
             text-align: center;
             text-shadow: 0 0 15px rgba(255, 11, 130, 0.9), 0 0 5px rgba(255, 11, 130, 0.7);
             opacity: 0;
-            animation: fadeIn 3s ease-out forwards, pulse 1.5s infinite;
-            z-index: 10;
+            z-index: 2;
+            animation: fadeIn 2s ease-out 1s forwards, pulse 1.5s infinite;
         }
         @keyframes fadeIn {
             to { opacity: 1; }
@@ -49,20 +55,81 @@
                 font-size: clamp(0.8rem, 4vw, 1.8rem);
             }
         }
+        body {
+            background: linear-gradient(45deg, #1a001a, #000000);
+        }
     </style>
 </head>
 <body>
+    <canvas id="bg-canvas"></canvas>
     <canvas id="pinkboard"></canvas>
     <div class="text">Gửi Huệ tồi tệ</div>
     <script>
+        // Background Particles
+        (function() {
+            const bgCanvas = document.getElementById('bg-canvas');
+            const bgCtx = bgCanvas.getContext('2d');
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+
+            const particlesArray = [];
+            const numberOfParticles = 100;
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * bgCanvas.width;
+                    this.y = Math.random() * bgCanvas.height;
+                    this.size = Math.random() * 2 + 1;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < 0 || this.x > bgCanvas.width) this.speedX = -this.speedX;
+                    if (this.y < 0 || this.y > bgCanvas.height) this.speedY = -this.speedY;
+                }
+                draw() {
+                    bgCtx.fillStyle = `rgba(255, 11, 130, ${Math.random() * 0.3 + 0.1})`;
+                    bgCtx.beginPath();
+                    bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    bgCtx.fill();
+                }
+            }
+
+            function init() {
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+
+            function animate() {
+                bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                bgCanvas.width = window.innerWidth;
+                bgCanvas.height = window.innerHeight;
+            });
+
+            init();
+            animate();
+        })();
+
+        // Heart Effect
         var settings = {
             particles: {
-                length: window.innerWidth < 768 ? 300 : 1200, // Tăng hạt trên desktop, giữ 300 trên mobile
+                length: window.innerWidth < 768 ? 300 : 1200,
                 duration: 3,
                 velocity: 80,
                 effect: -1.3,
                 size: 8,
-                pulseFactor: 0.1 // Thêm yếu tố đập
+                pulseFactor: 0.1
             },
         };
 
@@ -108,7 +175,6 @@
                 this.age = 0;
             };
             Particle.prototype.update = function(deltaTime, pulse) {
-                // Thêm hiệu ứng đập
                 var scale = 1 + Math.sin(Date.now() / 500) * settings.particles.pulseFactor * pulse;
                 this.position.x += this.velocity.x * deltaTime * scale;
                 this.position.y += this.velocity.y * deltaTime * scale;
@@ -142,7 +208,7 @@
                 if (firstActive == particles.length) firstActive = 0;
             };
             ParticlePool.prototype.update = function(deltaTime) {
-                var i, pulse = Math.abs(Math.sin(Date.now() / 500)); // Tạo hiệu ứng đập
+                var i, pulse = Math.abs(Math.sin(Date.now() / 500));
                 if (firstActive < firstFree) {
                     for (i = firstActive; i < firstFree; i++)
                         particles[i].update(deltaTime, pulse);
@@ -234,11 +300,11 @@
             function onResize() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                render(); // Cập nhật ngay khi thay đổi kích thước
+                render();
             }
             window.addEventListener('resize', onResize);
-            onResize(); // Khởi động ngay lập tức
-            render();
+            onResize();
+            setTimeout(render, 1000); // Delay để tạo hiệu ứng intro
         })(document.getElementById('pinkboard'));
     </script>
 </body>
