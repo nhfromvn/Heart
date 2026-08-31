@@ -26,7 +26,6 @@
             justify-content: center;
             background: linear-gradient(135deg, #ffd6e8 0%, #ffe8f5 30%, #e8d5ff 60%, #fff0f5 100%);
             transition: opacity 0.8s ease, transform 0.8s ease;
-            cursor: pointer;
         }
         #gift-screen.hide {
             opacity: 0;
@@ -76,22 +75,6 @@
         @keyframes cloudDrift {
             0%   { transform: translateX(-120%); }
             100% { transform: translateX(120vw); }
-        }
-
-        .gift-hint {
-            position: relative;
-            z-index: 2;
-            margin-top: 2rem;
-            color: #d63384;
-            font-size: clamp(1rem, 4vw, 1.4rem);
-            font-weight: 600;
-            text-align: center;
-            animation: hintBounce 1.5s ease-in-out infinite;
-            text-shadow: 0 2px 8px rgba(214,51,132,0.3);
-        }
-        @keyframes hintBounce {
-            0%, 100% { transform: translateY(0); }
-            50%       { transform: translateY(-8px); }
         }
 
         /* Gift box */
@@ -273,41 +256,38 @@
             50%       { transform: translateY(-18px) rotate(15deg); }
         }
 
-        .header {
+        .message-wrap {
             position: absolute;
-            top: 72%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.8);
+            z-index: 2;
+            text-align: center;
+            width: min(92vw, 640px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .message-wrap.show {
+            animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+                       pulse 1.5s infinite 0.8s;
+        }
+
+        .header {
             color: #ff4d9e;
             font-size: clamp(1.4rem, 6vw, 3rem);
             font-weight: bold;
             font-style: italic;
             text-align: center;
             text-shadow: 0 0 15px rgba(255, 11, 130, 0.9), 0 0 5px rgba(255, 11, 130, 0.7);
-            opacity: 0;
-            z-index: 2;
-        }
-        .header.show {
-            animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-                       pulse 1.5s infinite 0.8s;
+            margin-bottom: 0.8rem;
         }
         .text {
-            position: absolute;
-            top: 84%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
             color: #ff0b82;
             font-size: clamp(1rem, 4vw, 2rem);
             font-style: italic;
             text-align: center;
             line-height: 1.5;
             text-shadow: 0 0 15px rgba(255, 11, 130, 0.9), 0 0 5px rgba(255, 11, 130, 0.7);
-            opacity: 0;
-            z-index: 2;
-        }
-        .text.show {
-            animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards,
-                       pulse 1.5s infinite 1.2s;
         }
         @keyframes popIn {
             to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
@@ -345,7 +325,6 @@
                 <div class="gift-body"></div>
             </div>
         </div>
-        <p class="gift-hint">🎁 Chạm vào hộp quà nè! 💕</p>
     </div>
 
     <canvas id="confetti-canvas"></canvas>
@@ -355,12 +334,13 @@
         <canvas id="bg-canvas"></canvas>
         <div class="cute-decor" id="cuteDecor"></div>
         <canvas id="pinkboard"></canvas>
-        <div class="header" id="headerText">Hải My tồi tệ</div>
-        <div class="text" id="mainText">
-            Hải My xinh gái<br>
-            nhưng là bác sĩ dởm<br>
-            Chỉ biết gây mê<br>
-            rồi bỏ trốn...
+        <div class="message-wrap" id="messageWrap">
+            <div class="text" id="mainText">
+                Hải My xinh gái<br>
+                là bác sĩ dởm<br>
+                Chỉ biết gây mê<br>
+                rồi bỏ trốn...
+            </div>
         </div>
     </div>
 
@@ -470,7 +450,7 @@
             draw();
         }
 
-        // ── Gift open interaction ──
+        // ── Gift auto open ──
         let opened = false;
         const giftScreen  = document.getElementById('gift-screen');
         const giftBox     = document.getElementById('giftBox');
@@ -491,16 +471,14 @@
             setTimeout(() => {
                 giftScreen.classList.add('hide');
                 mainContent.classList.add('show');
-                document.getElementById('headerText').classList.add('show');
-                document.getElementById('mainText').classList.add('show');
+                document.getElementById('messageWrap').classList.add('show');
                 startMainEffects();
             }, 1200);
 
             setTimeout(() => giftScreen.remove(), 2200);
         }
 
-        giftScreen.addEventListener('click', openGift);
-        giftScreen.addEventListener('touchstart', (e) => { e.preventDefault(); openGift(); }, { passive: false });
+        setTimeout(openGift, 1000);
 
         // ── Main effects (deferred until gift opens) ──
         let effectsStarted = false;
