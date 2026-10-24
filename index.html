@@ -260,7 +260,7 @@
             position: absolute;
             top: 72%;
             left: 50%;
-            transform: translate(-50%, 0) scale(0.8);
+            transform: translate(-50%, 0);
             z-index: 2;
             text-align: center;
             width: min(92vw, 640px);
@@ -283,13 +283,15 @@
         }
         .text {
             color: #ff0b82;
-            font-size: clamp(1rem, 4vw, 2rem);
+            font-size: clamp(1.6rem, 7vw, 3.5rem);
+            font-weight: bold;
             font-style: italic;
             text-align: center;
-            line-height: 1.5;
+            line-height: 1.4;
             text-shadow: 0 0 15px rgba(255, 11, 130, 0.9), 0 0 5px rgba(255, 11, 130, 0.7);
         }
         @keyframes popIn {
+            from { transform: translate(-50%, 0) scale(0.92); }
             to { opacity: 1; transform: translate(-50%, 0) scale(1); }
         }
         @keyframes pulse {
@@ -300,8 +302,7 @@
 
         @media (max-width: 768px) {
             .message-wrap { top: 68%; }
-            .header { font-size: clamp(1rem, 5vw, 2.2rem); }
-            .text   { font-size: clamp(0.75rem, 3.5vw, 1.5rem); }
+            .text { font-size: clamp(1.25rem, 6.5vw, 2.75rem); }
         }
 
         body {
