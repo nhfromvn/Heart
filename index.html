@@ -432,13 +432,16 @@
         }
         .poem-line {
             margin: 0;
-            color: #ff0b82;
+            color: #ffe8f4;
             font-size: clamp(1.05rem, 2.8vw + 0.35rem, 2.15rem);
             font-weight: bold;
             font-style: italic;
             line-height: 1.55;
             letter-spacing: 0.02em;
-            text-shadow: 0 0 15px rgba(255, 11, 130, 0.9), 0 0 5px rgba(255, 11, 130, 0.7);
+            text-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.85),
+                0 0 1px rgba(74, 0, 40, 0.9),
+                0 0 14px rgba(255, 105, 180, 0.45);
         }
         .poem-line + .poem-line {
             margin-top: 0.2em;
@@ -452,6 +455,15 @@
             50%  { transform: translate(-50%, 0) scale(1.05); }
             100% { transform: translate(-50%, 0) scale(1); }
         }
+        @keyframes popInMobile {
+            from { transform: translate(-50%, 0) scale(0.94); }
+            to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+        }
+        @keyframes pulseMobile {
+            0%   { transform: translate(-50%, 0) scale(1); }
+            50%  { transform: translate(-50%, 0) scale(1.02); }
+            100% { transform: translate(-50%, 0) scale(1); }
+        }
 
         @media (max-width: 768px) {
             .float-item { font-size: clamp(0.95rem, 2.6vw, 1.45rem); }
@@ -461,17 +473,31 @@
             .gift-wrap { transform: scale(0.95); }
 
             .message-wrap {
-                top: 66%;
+                top: auto;
+                bottom: max(0.85rem, env(safe-area-inset-bottom, 0px));
                 width: min(96vw, 100%);
-                padding: 0 1rem;
+                padding: 0 0.65rem;
             }
-            .text {
-                font-size: clamp(0.95rem, 3.4vw, 1.55rem);
-                line-height: 1.5;
+            .poem {
+                background: rgba(12, 0, 10, 0.78);
+                border: 1px solid rgba(255, 120, 180, 0.4);
+                border-radius: 14px;
+                padding: 0.7rem 0.85rem;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
             }
             .poem-line {
-                font-size: clamp(0.95rem, 3.4vw, 1.55rem);
-                line-height: 1.5;
+                color: #fff;
+                font-size: clamp(0.95rem, 3.4vw, 1.45rem);
+                line-height: 1.48;
+                text-shadow:
+                    0 1px 3px rgba(0, 0, 0, 0.9),
+                    0 0 10px rgba(255, 77, 158, 0.35);
+            }
+            .message-wrap.show {
+                animation: popInMobile 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+                           pulseMobile 1.5s infinite 0.8s;
             }
             .message-charm {
                 font-size: clamp(1.05rem, 4vw, 1.55rem);
@@ -496,12 +522,12 @@
             .gift-orbit { --orbit-r: clamp(2.5rem, 22vw, 3.25rem); }
             .gift-wrap { transform: scale(0.88); }
 
-            .message-wrap { top: 66%; }
-            .text {
-                font-size: clamp(0.875rem, 3.1vw, 1.25rem);
+            .message-wrap {
+                bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
             }
+            .poem { padding: 0.55rem 0.7rem; }
             .poem-line {
-                font-size: clamp(0.875rem, 3.1vw, 1.25rem);
+                font-size: clamp(0.875rem, 3.1vw, 1.2rem);
             }
             .message-charm {
                 gap: 0.2rem 0.35rem;
@@ -515,8 +541,11 @@
             .gift-orbit span:nth-child(4),
             .gift-orbit span:nth-child(5) { display: none; }
             .gift-heading { margin-bottom: 0.5rem; }
-            .message-wrap { top: 61%; padding: 0 0.65rem; }
-            .poem-line { font-size: clamp(0.75rem, 2.7vw, 0.95rem); }
+            .message-wrap {
+                bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+                padding: 0 0.5rem;
+            }
+            .poem-line { font-size: clamp(0.8rem, 2.9vw, 1rem); }
         }
 
         @media (max-height: 640px) {
@@ -532,13 +561,11 @@
             .gift-orbit { --orbit-r: clamp(2.25rem, 12vw, 2.85rem); inset: -32%; }
             .gift-wrap { transform: scale(0.82); }
 
-            .message-wrap { top: 66%; }
-            .text {
-                font-size: clamp(0.8rem, 2.8vw, 1.15rem);
-                line-height: 1.35;
+            .message-wrap {
+                bottom: max(0.45rem, env(safe-area-inset-bottom, 0px));
             }
             .poem-line {
-                font-size: clamp(0.72rem, 2.5vw, 0.95rem);
+                font-size: clamp(0.78rem, 2.6vw, 0.95rem);
                 line-height: 1.4;
             }
             .message-charm {
@@ -552,7 +579,9 @@
             .gift-heading,
             .gift-hint { display: none; }
             .gift-wrap { transform: scale(0.75); }
-            .message-wrap { top: 74%; }
+            .message-wrap {
+                bottom: max(0.35rem, env(safe-area-inset-bottom, 0px));
+            }
             .message-charm .charm-icon:nth-child(n + 4) { display: none; }
         }
 
@@ -992,17 +1021,36 @@
                     return img;
                 })();
 
+                function getHeartLayout() {
+                    var w = canvas.width;
+                    var h = canvas.height;
+                    var cx = w / 2;
+                    var cy = h / 2;
+                    var scale = 1;
+                    if (w < 480 || h < 640) {
+                        cy = h * 0.34;
+                        scale = 0.78;
+                    } else if (w < 768) {
+                        cy = h * 0.38;
+                        scale = 0.88;
+                    }
+                    return { cx: cx, cy: cy, scale: scale };
+                }
+
                 function render() {
                     requestAnimationFrame(render);
                     var newTime = new Date().getTime() / 1000,
                         deltaTime = newTime - (time || newTime);
                     time = newTime;
                     context.clearRect(0, 0, canvas.width, canvas.height);
+                    var layout = getHeartLayout();
                     var amount = particleRate * deltaTime;
                     for (var i = 0; i < amount; i++) {
                         var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+                        pos.x *= layout.scale;
+                        pos.y *= layout.scale;
                         var dir = pos.clone().length(settings.particles.velocity);
-                        particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
+                        particles.add(layout.cx + pos.x, layout.cy - pos.y, dir.x, -dir.y);
                     }
                     particles.update(deltaTime);
                     particles.draw(context, image);
