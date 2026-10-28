@@ -392,7 +392,7 @@
 
         .message-wrap {
             position: absolute;
-            top: 72%;
+            top: 68%;
             left: 50%;
             transform: translate(-50%, 0);
             z-index: 2;
@@ -427,6 +427,24 @@
             overflow-wrap: break-word;
             text-shadow: 0 0 15px rgba(255, 11, 130, 0.9), 0 0 5px rgba(255, 11, 130, 0.7);
         }
+        .poem {
+            margin: clamp(0.65rem, 2.5vw, 1rem) 0 0;
+            padding-top: clamp(0.55rem, 2vw, 0.85rem);
+            border-top: 1px solid rgba(255, 11, 130, 0.35);
+        }
+        .poem-line {
+            margin: 0;
+            color: #ff6eb4;
+            font-size: clamp(0.95rem, 2.5vw + 0.2rem, 1.45rem);
+            font-weight: 600;
+            font-style: italic;
+            line-height: 1.55;
+            letter-spacing: 0.02em;
+            text-shadow: 0 0 10px rgba(255, 11, 130, 0.65), 0 0 4px rgba(255, 11, 130, 0.5);
+        }
+        .poem-line + .poem-line {
+            margin-top: 0.2em;
+        }
         @keyframes popIn {
             from { transform: translate(-50%, 0) scale(0.92); }
             to { opacity: 1; transform: translate(-50%, 0) scale(1); }
@@ -453,6 +471,10 @@
                 font-size: clamp(0.95rem, 3.4vw, 1.55rem);
                 line-height: 1.5;
             }
+            .poem-line {
+                font-size: clamp(0.88rem, 3vw, 1.2rem);
+                line-height: 1.5;
+            }
             .message-charm {
                 font-size: clamp(1.05rem, 4vw, 1.55rem);
                 margin-bottom: 0.5rem;
@@ -476,9 +498,13 @@
             .gift-orbit { --orbit-r: clamp(2.5rem, 22vw, 3.25rem); }
             .gift-wrap { transform: scale(0.88); }
 
-            .message-wrap { top: 63%; }
+            .message-wrap { top: 60%; }
             .text {
                 font-size: clamp(0.875rem, 3.1vw, 1.25rem);
+            }
+            .poem { margin-top: 0.5rem; padding-top: 0.45rem; }
+            .poem-line {
+                font-size: clamp(0.8rem, 2.9vw, 1.05rem);
             }
             .message-charm {
                 gap: 0.2rem 0.35rem;
@@ -493,6 +519,7 @@
             .gift-orbit span:nth-child(5) { display: none; }
             .gift-heading { margin-bottom: 0.5rem; }
             .message-wrap { top: 61%; padding: 0 0.65rem; }
+            .poem-line { font-size: clamp(0.75rem, 2.7vw, 0.95rem); }
         }
 
         @media (max-height: 640px) {
@@ -508,10 +535,14 @@
             .gift-orbit { --orbit-r: clamp(2.25rem, 12vw, 2.85rem); inset: -32%; }
             .gift-wrap { transform: scale(0.82); }
 
-            .message-wrap { top: 70%; }
+            .message-wrap { top: 66%; }
             .text {
                 font-size: clamp(0.8rem, 2.8vw, 1.15rem);
                 line-height: 1.35;
+            }
+            .poem-line {
+                font-size: clamp(0.72rem, 2.5vw, 0.95rem);
+                line-height: 1.4;
             }
             .message-charm {
                 margin-bottom: 0.35rem;
@@ -595,6 +626,12 @@
                 <span class="charm-icon">🌸</span>
             </div>
             <div class="text" id="mainText">Lý Tâm Nhi đáng yêu sớm hết bận để hát cho anh nghe nhé</div>
+            <div class="poem">
+                <p class="poem-line">Tâm Nhi đáng yêu</p>
+                <p class="poem-line">Mong ngày chóng chiều</p>
+                <p class="poem-line">Bài vơi chóng hết</p>
+                <p class="poem-line">Bớt nhớ em nhiều</p>
+            </div>
             <div class="message-charm bottom" aria-hidden="true">
                 <span class="charm-icon">💖</span>
                 <span class="charm-icon">🦋</span>
