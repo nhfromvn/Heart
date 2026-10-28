@@ -474,11 +474,12 @@
 
             .message-wrap {
                 top: auto;
-                bottom: max(0.85rem, env(safe-area-inset-bottom, 0px));
+                bottom: clamp(2.75rem, 13vh, 4.5rem);
                 width: min(96vw, 100%);
                 padding: 0 0.65rem;
             }
             .poem {
+                margin-top: 0.15rem;
                 background: rgba(12, 0, 10, 0.78);
                 border: 1px solid rgba(255, 120, 180, 0.4);
                 border-radius: 14px;
@@ -523,7 +524,7 @@
             .gift-wrap { transform: scale(0.88); }
 
             .message-wrap {
-                bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
+                bottom: clamp(2.25rem, 11vh, 3.75rem);
             }
             .poem { padding: 0.55rem 0.7rem; }
             .poem-line {
@@ -542,7 +543,7 @@
             .gift-orbit span:nth-child(5) { display: none; }
             .gift-heading { margin-bottom: 0.5rem; }
             .message-wrap {
-                bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+                bottom: clamp(2rem, 10vh, 3.25rem);
                 padding: 0 0.5rem;
             }
             .poem-line { font-size: clamp(0.8rem, 2.9vw, 1rem); }
@@ -562,7 +563,7 @@
             .gift-wrap { transform: scale(0.82); }
 
             .message-wrap {
-                bottom: max(0.45rem, env(safe-area-inset-bottom, 0px));
+                bottom: clamp(1.75rem, 9vh, 3rem);
             }
             .poem-line {
                 font-size: clamp(0.78rem, 2.6vw, 0.95rem);
@@ -580,7 +581,7 @@
             .gift-hint { display: none; }
             .gift-wrap { transform: scale(0.75); }
             .message-wrap {
-                bottom: max(0.35rem, env(safe-area-inset-bottom, 0px));
+                bottom: clamp(1.25rem, 8vh, 2.5rem);
             }
             .message-charm .charm-icon:nth-child(n + 4) { display: none; }
         }
@@ -648,7 +649,7 @@
                 <p class="poem-line">Tâm Nhi đáng yêu</p>
                 <p class="poem-line">Mong ngày chóng chiều</p>
                 <p class="poem-line">Bài vở chóng hết</p>
-                <p class="poem-line">Bớt nhớ em nhiều</p>
+                <p class="poem-line">Đỡ nhớ em nhiều</p>
             </div>
         </div>
     </div>
@@ -1028,11 +1029,11 @@
                     var cy = h / 2;
                     var scale = 1;
                     if (w < 480 || h < 640) {
-                        cy = h * 0.34;
-                        scale = 0.78;
+                        cy = h * 0.375;
+                        scale = 0.84;
                     } else if (w < 768) {
-                        cy = h * 0.38;
-                        scale = 0.88;
+                        cy = h * 0.395;
+                        scale = 0.9;
                     }
                     return { cx: cx, cy: cy, scale: scale };
                 }
