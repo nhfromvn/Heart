@@ -24,6 +24,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 1rem;
             background: linear-gradient(135deg, #ffd6e8 0%, #ffe8f5 30%, #e8d5ff 60%, #fff0f5 100%);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
@@ -52,6 +53,104 @@
             font-size: clamp(1.2rem, 3vw, 2rem);
             animation: floatUp linear infinite;
             opacity: 0.7;
+        }
+        .float-item.sparkle {
+            animation: floatUp linear infinite, twinkleOpacity 1.8s ease-in-out infinite;
+        }
+
+        .gift-stickers {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .sticker {
+            position: absolute;
+            font-size: clamp(1.4rem, 4vw, 2.4rem);
+            animation: stickerWiggle ease-in-out infinite;
+            filter: drop-shadow(0 2px 6px rgba(255,105,180,0.35));
+        }
+        @keyframes stickerWiggle {
+            0%, 100% { transform: rotate(-8deg) scale(1); }
+            50%       { transform: rotate(8deg) scale(1.08); }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.45; transform: scale(0.92); }
+            50%       { opacity: 1; transform: scale(1.12); }
+        }
+        @keyframes twinkleOpacity {
+            0%, 100% { opacity: 0.35; }
+            50%       { opacity: 0.95; }
+        }
+
+        .gift-heading {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            margin-bottom: clamp(1rem, 4vw, 2rem);
+            animation: headingBob 2.5s ease-in-out infinite;
+        }
+        .gift-title {
+            display: inline-block;
+            font-size: clamp(1.1rem, 4.5vw, 1.75rem);
+            font-weight: 700;
+            font-style: italic;
+            color: #e84393;
+            text-shadow: 0 2px 12px rgba(232,67,147,0.35);
+        }
+        .gift-title-icon {
+            display: inline-block;
+            margin: 0 0.35em;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        .gift-title-icon:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes headingBob {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-6px); }
+        }
+
+        .gift-hint {
+            position: relative;
+            z-index: 2;
+            margin-top: clamp(1.25rem, 5vw, 2rem);
+            font-size: clamp(0.95rem, 3.5vw, 1.2rem);
+            color: #d63384;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0.9;
+        }
+        .gift-hint span {
+            display: inline-block;
+            animation: hintPulse 1.6s ease-in-out infinite;
+        }
+        .gift-hint span:nth-child(2) { animation-delay: 0.25s; }
+        .gift-hint span:nth-child(3) { animation-delay: 0.5s; }
+        @keyframes hintPulse {
+            0%, 100% { transform: scale(1); }
+            50%       { transform: scale(1.15); }
+        }
+
+        .gift-orbit {
+            position: absolute;
+            inset: -45%;
+            pointer-events: none;
+            animation: orbitSpin 18s linear infinite;
+            --orbit-r: clamp(3rem, 14vw, 4.75rem);
+        }
+        .gift-orbit span {
+            position: absolute;
+            font-size: clamp(0.85rem, 2.8vw, 1.5rem);
+            left: 50%;
+            top: 50%;
+            margin: -0.55em 0 0 -0.55em;
+        }
+        .gift-orbit span:nth-child(1) { transform: rotate(0deg) translateY(calc(-1 * var(--orbit-r))); }
+        .gift-orbit span:nth-child(2) { transform: rotate(72deg) translateY(calc(-1 * var(--orbit-r))); }
+        .gift-orbit span:nth-child(3) { transform: rotate(144deg) translateY(calc(-1 * var(--orbit-r))); }
+        .gift-orbit span:nth-child(4) { transform: rotate(216deg) translateY(calc(-1 * var(--orbit-r))); }
+        .gift-orbit span:nth-child(5) { transform: rotate(288deg) translateY(calc(-1 * var(--orbit-r))); }
+        @keyframes orbitSpin {
+            to { transform: rotate(360deg); }
         }
         @keyframes floatUp {
             0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
@@ -251,9 +350,44 @@
             animation: decorFloat ease-in-out infinite;
             opacity: 0.55;
         }
+        .decor-item.large {
+            font-size: clamp(1.35rem, 3.5vw, 2.1rem);
+            opacity: 0.65;
+        }
+        .decor-item.twinkle {
+            animation: decorFloat ease-in-out infinite, twinkleOpacity 2.2s ease-in-out infinite;
+        }
         @keyframes decorFloat {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50%       { transform: translateY(-18px) rotate(15deg); }
+        }
+
+        .message-charm {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(0.35rem, 2vw, 0.75rem);
+            margin-bottom: 0.65rem;
+            font-size: clamp(1.25rem, 4.5vw, 2rem);
+            max-width: 100%;
+        }
+        .message-charm.bottom {
+            margin-bottom: 0;
+            margin-top: 0.65rem;
+        }
+        .charm-icon {
+            display: inline-block;
+            animation: charmBounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 11, 130, 0.55));
+        }
+        .charm-icon:nth-child(2) { animation-delay: 0.2s; }
+        .charm-icon:nth-child(3) { animation-delay: 0.4s; }
+        .charm-icon:nth-child(4) { animation-delay: 0.6s; }
+        .charm-icon:nth-child(5) { animation-delay: 0.8s; }
+        @keyframes charmBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50%       { transform: translateY(-5px) scale(1.12); }
         }
 
         .message-wrap {
@@ -304,6 +438,12 @@
         }
 
         @media (max-width: 768px) {
+            .float-item { font-size: clamp(0.95rem, 2.6vw, 1.45rem); }
+            .sticker { font-size: clamp(1.05rem, 3.2vw, 1.65rem); }
+            .gift-heading { margin-bottom: 0.75rem; }
+            .gift-orbit { inset: -38%; --orbit-r: clamp(2.85rem, 18vw, 4rem); }
+            .gift-wrap { transform: scale(0.95); }
+
             .message-wrap {
                 top: 66%;
                 width: min(96vw, 100%);
@@ -313,20 +453,91 @@
                 font-size: clamp(0.95rem, 3.4vw, 1.55rem);
                 line-height: 1.5;
             }
+            .message-charm {
+                font-size: clamp(1.05rem, 4vw, 1.55rem);
+                margin-bottom: 0.5rem;
+            }
+            .message-charm.bottom { margin-top: 0.5rem; }
+            .decor-item { font-size: clamp(0.8rem, 2.1vw, 1.2rem); opacity: 0.5; }
+            .decor-item.large { font-size: clamp(0.95rem, 2.6vw, 1.35rem); }
         }
 
         @media (max-width: 480px) {
+            #gift-screen { padding: 0.65rem 0.5rem; }
+            .gift-title {
+                font-size: clamp(0.9rem, 4.2vw, 1.15rem);
+                max-width: 92vw;
+                line-height: 1.35;
+            }
+            .gift-hint {
+                font-size: clamp(0.8rem, 3.2vw, 0.95rem);
+                margin-top: 0.85rem;
+            }
+            .gift-orbit { --orbit-r: clamp(2.5rem, 22vw, 3.25rem); }
+            .gift-wrap { transform: scale(0.88); }
+
             .message-wrap { top: 63%; }
             .text {
                 font-size: clamp(0.875rem, 3.1vw, 1.25rem);
             }
+            .message-charm {
+                gap: 0.2rem 0.35rem;
+                font-size: clamp(0.95rem, 3.8vw, 1.2rem);
+            }
+            .message-charm .charm-icon:nth-child(n + 4) { display: none; }
+            .decor-item { font-size: clamp(0.72rem, 2vw, 1rem); }
+        }
+
+        @media (max-width: 360px) {
+            .gift-orbit span:nth-child(4),
+            .gift-orbit span:nth-child(5) { display: none; }
+            .gift-heading { margin-bottom: 0.5rem; }
+            .message-wrap { top: 61%; padding: 0 0.65rem; }
         }
 
         @media (max-height: 640px) {
+            #gift-screen {
+                padding: 0.5rem;
+                justify-content: center;
+            }
+            .gift-heading {
+                margin-bottom: 0.35rem;
+                animation: none;
+            }
+            .gift-hint { margin-top: 0.45rem; }
+            .gift-orbit { --orbit-r: clamp(2.25rem, 12vw, 2.85rem); inset: -32%; }
+            .gift-wrap { transform: scale(0.82); }
+
             .message-wrap { top: 70%; }
             .text {
                 font-size: clamp(0.8rem, 2.8vw, 1.15rem);
                 line-height: 1.35;
+            }
+            .message-charm {
+                margin-bottom: 0.35rem;
+                font-size: clamp(0.85rem, 2.8vw, 1.05rem);
+            }
+            .message-charm.bottom { margin-top: 0.35rem; }
+        }
+
+        @media (max-height: 520px) and (orientation: landscape) {
+            .gift-heading,
+            .gift-hint { display: none; }
+            .gift-wrap { transform: scale(0.75); }
+            .message-wrap { top: 74%; }
+            .message-charm .charm-icon:nth-child(n + 4) { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .float-item,
+            .sticker,
+            .gift-orbit,
+            .decor-item,
+            .charm-icon,
+            .gift-heading,
+            .gift-hint span,
+            .gift-title-icon {
+                animation: none !important;
             }
         }
 
@@ -340,7 +551,18 @@
     <!-- Gift opening screen -->
     <div id="gift-screen">
         <div class="cute-bg" id="cuteBg"></div>
+        <div class="gift-stickers" id="giftStickers" aria-hidden="true"></div>
+        <div class="gift-heading">
+            <div class="gift-title">
+                <span class="gift-title-icon">🎀</span>
+                Gửi Nhi món quà nhỏ
+                <span class="gift-title-icon">💝</span>
+            </div>
+        </div>
         <div class="gift-wrap">
+            <div class="gift-orbit" aria-hidden="true">
+                <span>💕</span><span>✨</span><span>🌸</span><span>🎵</span><span>💖</span>
+            </div>
             <div class="gift-glow"></div>
             <div class="gift-box" id="giftBox">
                 <div class="gift-bow">
@@ -352,6 +574,9 @@
                 <div class="gift-body"></div>
             </div>
         </div>
+        <p class="gift-hint" aria-hidden="true">
+            <span>🌷</span><span> sắp mở rồi nè </span><span>🎶</span>
+        </p>
     </div>
 
     <canvas id="confetti-canvas"></canvas>
@@ -362,27 +587,65 @@
         <div class="cute-decor" id="cuteDecor"></div>
         <canvas id="pinkboard"></canvas>
         <div class="message-wrap" id="messageWrap">
+            <div class="message-charm" aria-hidden="true">
+                <span class="charm-icon">🎤</span>
+                <span class="charm-icon">💕</span>
+                <span class="charm-icon">🎶</span>
+                <span class="charm-icon">✨</span>
+                <span class="charm-icon">🌸</span>
+            </div>
             <div class="text" id="mainText">Lý Tâm Nhi đáng yêu sớm hết bận để hát cho anh nghe nhé</div>
+            <div class="message-charm bottom" aria-hidden="true">
+                <span class="charm-icon">💖</span>
+                <span class="charm-icon">🦋</span>
+                <span class="charm-icon">⭐</span>
+                <span class="charm-icon">🎀</span>
+                <span class="charm-icon">💗</span>
+            </div>
         </div>
     </div>
 
     <script>
         // ── Cute floating items on gift screen ──
         (function() {
-            const emojis = ['✨', '💕', '🌸', '⭐', '🎀', '💖', '🌷', '💗', '🦋', '☁️'];
+            const emojis = [
+                '✨', '💕', '🌸', '⭐', '🎀', '💖', '🌷', '💗', '🦋', '☁️',
+                '🎵', '🎶', '🎤', '💝', '🌺', '🍓', '🧸', '💫', '🌙', '🫧'
+            ];
             const bg = document.getElementById('cuteBg');
+            const stickers = document.getElementById('giftStickers');
+            const stickerSpotsAll = [
+                [6, 8], [92, 10], [4, 42], [94, 38], [8, 78], [90, 82], [22, 18], [78, 22]
+            ];
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            const floatCount = w < 480 ? 12 : w < 768 ? 16 : emojis.length;
+            const stickerSpots = w < 480 ? stickerSpotsAll.slice(0, 4)
+                : w < 768 ? stickerSpotsAll.slice(0, 6) : stickerSpotsAll;
+            const cloudCount = h < 640 ? 3 : 5;
 
-            emojis.forEach((e, i) => {
+            emojis.slice(0, floatCount).forEach((e, i) => {
                 const el = document.createElement('span');
-                el.className = 'float-item';
+                el.className = 'float-item' + (i % 3 === 0 ? ' sparkle' : '');
                 el.textContent = e;
-                el.style.left = (5 + i * 9 + Math.random() * 5) + '%';
-                el.style.animationDuration = (8 + Math.random() * 10) + 's';
-                el.style.animationDelay = (Math.random() * 8) + 's';
+                el.style.left = (2 + (i * 4.8) % 96 + Math.random() * 4) + '%';
+                el.style.animationDuration = (7 + Math.random() * 11) + 's';
+                el.style.animationDelay = (Math.random() * 10) + 's';
                 bg.appendChild(el);
             });
 
-            for (let i = 0; i < 3; i++) {
+            stickerSpots.forEach(([x, y], i) => {
+                const el = document.createElement('span');
+                el.className = 'sticker';
+                el.textContent = emojis[i % emojis.length];
+                el.style.left = x + '%';
+                el.style.top = y + '%';
+                el.style.animationDuration = (2.5 + (i % 4) * 0.4) + 's';
+                el.style.animationDelay = (i * 0.15) + 's';
+                stickers.appendChild(el);
+            });
+
+            for (let i = 0; i < cloudCount; i++) {
                 const cloud = document.createElement('div');
                 cloud.className = 'cloud';
                 const w = 80 + Math.random() * 60;
@@ -399,20 +662,34 @@
 
         // ── Cute decor on main screen ──
         (function() {
-            const items = ['💕', '✨', '🌸', '💖', '⭐', '🎀'];
-            const decor = document.getElementById('cuteDecor');
-            const positions = [
-                [8, 12], [88, 8], [5, 55], [92, 48],
-                [15, 80], [85, 75], [50, 5], [50, 92]
+            const items = [
+                '💕', '✨', '🌸', '💖', '⭐', '🎀', '🎵', '🎶', '🎤', '🦋',
+                '💗', '🌷', '💫', '🌙', '🫧', '💝', '🌺', '🧸', '🍓', '☁️'
             ];
+            const decor = document.getElementById('cuteDecor');
+            const positionsAll = [
+                [8, 12], [88, 8], [5, 55], [92, 48],
+                [15, 80], [85, 75], [50, 5], [50, 92],
+                [28, 28], [72, 25], [3, 32], [96, 62],
+                [12, 42], [88, 88], [45, 88], [55, 12],
+                [32, 68], [68, 58], [22, 8], [78, 92]
+            ];
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            let positions = positionsAll;
+            if (vw < 480 || vh < 640) positions = positionsAll.slice(0, 12);
+            if (vw < 360) positions = positionsAll.slice(0, 8);
+
             positions.forEach(([x, y], i) => {
                 const el = document.createElement('span');
-                el.className = 'decor-item';
+                const extra = (i % 5 === 0 && vw >= 480 ? ' large' : '')
+                    + (i % 4 === 0 ? ' twinkle' : '');
+                el.className = 'decor-item' + extra;
                 el.textContent = items[i % items.length];
                 el.style.left = x + '%';
                 el.style.top  = y + '%';
-                el.style.animationDuration = (3 + i * 0.5) + 's';
-                el.style.animationDelay = (i * 0.3) + 's';
+                el.style.animationDuration = (3 + (i % 6) * 0.45) + 's';
+                el.style.animationDelay = (i * 0.22) + 's';
                 decor.appendChild(el);
             });
         })();
